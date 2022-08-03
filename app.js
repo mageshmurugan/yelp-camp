@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-// const MongoDBStore = require("connect-mongo");
+const MongoStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -63,19 +63,19 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 
-// const store = MongoDBStore.create({
-//     mongoUrl: dbUrl,
-//     secret,//: 'thisshouldbeabettersecret',
-//     touchAfter: 24 * 60 * 60
-// });
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret,//: 'thisshouldbeabettersecret',
+    touchAfter: 24 * 60 * 60
+});
 
-// store.on("error", function (e) {
-//     console.log("SESSION STORE ERROR", e)
-// })
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
 
 
 const sessionConfig = {
-    // store,
+    store,
     name: 'magesh__m/instagram',
     secret,//: 'thisshouldbeabettersecret',
     resave: false,
