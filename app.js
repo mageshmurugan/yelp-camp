@@ -64,7 +64,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 
 const store = new MongoDBStore({
-    uri: dbUrl,
+    openUri: dbUrl,
     client: dbUrl,
     clientPromise: dbUrl,
     secret,//: 'thisshouldbeabettersecret',
