@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-const MongoStore = require("connect-mongo");
+const mongostore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -63,8 +63,10 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 
-const store = MongoStore.create({
+const store = mongostore.create({
+    mongoUrl: dbUrl,
     client: dbUrl,
+    clientPromise: dbUrl,
     secret,//: 'thisshouldbeabettersecret',
     touchAfter: 24 * 60 * 60
 });
