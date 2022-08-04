@@ -74,8 +74,27 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 // })
 
 
-const sessionConfig = {
-    store: MongoDBStore.Crete({
+// const sessionConfig = {
+//     store: new MongoDBStore({
+//         mongoUrl: dbUrl,
+//         url: dbUrl,
+//         secret,
+//         touchAfter: 24 * 60 * 60
+//     }),
+//     name: 'magesh__m/instagram',
+//     secret,//: 'thisshouldbeabettersecret',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         httpOnly: true,
+//         // secure:true,
+//         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+//         maxAge: 1000 * 60 * 60 * 24 * 7
+//     }
+// }
+
+app.use(session({
+    store: new MongoDBStore({
         mongoUrl: dbUrl,
         url: dbUrl,
         secret,
@@ -91,9 +110,7 @@ const sessionConfig = {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}
-
-app.use(session(sessionConfig));
+}));
 app.use(flash());
 // app.use(helmet({ contentSecurityPolicy: false }));
 
