@@ -95,6 +95,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 app.use(session({
     store: new MongoDBStore({
+        mongooseConnection: mongoose.connection,
         mongoUrl: dbUrl,
         url: dbUrl,
         secret,
