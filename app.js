@@ -75,7 +75,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 
 const sessionConfig = {
-    store: MongoDBStore.create({
+    store: new MongoDBStore({
         mongoUrl: dbUrl,
         url: dbUrl,
         secret,
