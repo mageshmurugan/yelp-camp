@@ -62,56 +62,31 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
+const store = new MongoDBStore({
+    url: dbUrl,
+    secret,
+    touchAfter: 24 * 60 * 60
+});
 
-// const store = new MongoDBStore({
-//     mongourl: dbUrl,
-//     secret,//: 'thisshouldbeabettersecret',
-//     touchAfter: 24 * 60 * 60
-// });
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
 
-// store.on("error", function (e) {
-//     console.log("SESSION STORE ERROR", e)
-// })
-
-
-// const sessionConfig = {
-//     store: new MongoDBStore({
-//         mongoUrl: dbUrl,
-//         url: dbUrl,
-//         secret,
-//         touchAfter: 24 * 60 * 60
-//     }),
-//     name: 'magesh__m/instagram',
-//     secret,//: 'thisshouldbeabettersecret',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//         httpOnly: true,
-//         // secure:true,
-//         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-//         maxAge: 1000 * 60 * 60 * 24 * 7
-//     }
-// }
-
-app.use(session({
-    store: MongoDBStore.create({
-        mongooseConnection: mongoose.connection,
-        mongoUrl: dbUrl,
-        url: dbUrl,
-        secret,
-        touchAfter: 24 * 60 * 60
-    }),
-    name: 'magesh__m/instagram',
-    secret,//: 'thisshouldbeabettersecret',
+const sessionConfig = {
+    store,
+    name: 'session',
+    secret,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        // secure:true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}));
+}
+
+app.use(session(sessionConfig));
 app.use(flash());
 // app.use(helmet({ contentSecurityPolicy: false }));
 
