@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-const MongoDBStore = require("connect-mongo")(session);
+const MongoDBStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -94,7 +94,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 // }
 
 app.use(session({
-    store: new MongoDBStore({
+    store: MongoDBStore.create({
         mongooseConnection: mongoose.connection,
         mongoUrl: dbUrl,
         url: dbUrl,
@@ -104,7 +104,7 @@ app.use(session({
     name: 'magesh__m/instagram',
     secret,//: 'thisshouldbeabettersecret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
         // secure:true,
