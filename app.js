@@ -63,19 +63,24 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 
-const store = new MongoDBStore({
-    url: dbUrl,
-    secret,//: 'thisshouldbeabettersecret',
-    touchAfter: 24 * 60 * 60
-});
+// const store = new MongoDBStore({
+//     url: dbUrl,
+//     secret,//: 'thisshouldbeabettersecret',
+//     touchAfter: 24 * 60 * 60
+// });
 
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR", e)
-})
+// store.on("error", function (e) {
+//     console.log("SESSION STORE ERROR", e)
+// })
 
 
 const sessionConfig = {
-    store,
+    store: MongoDBStore.create({
+        mongoUrl: dbUrl,
+        url: dbUrl,
+        secret,
+        touchAfter: 24 * 60 * 60
+    }),
     name: 'magesh__m/instagram',
     secret,//: 'thisshouldbeabettersecret',
     resave: false,
