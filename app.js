@@ -66,7 +66,7 @@ const store = new MongoDBStore({
     uri: dbUrl,
     collection: 'mySessions',
     touchAfter: 24 * 60 * 60,
-    databaseName: "sessions"
+    databaseName: "cluster0"
     // secret: 'thisshouldbeabettersecret'
 },
     function (error) {
