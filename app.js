@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//     require('dotenv').config();
+// }
 
 // mongodb + srv://mageshmurugan:<password>@cluster0.yu1cetk.mongodb.net/?retryWrites=true&w=majority
 
@@ -64,7 +64,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 const store = new MongoDBStore({
     mongooseConnection: mongoose.connection,
-    uri: process.env.DB_URL,
+    uri: openUri(process.env.DB_URL),
     secret: process.env.SECRET,
     touchAfter: 24 * 60 * 60,
     collection: 'session',
