@@ -103,7 +103,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7
     },
     // mongoUrl: dbUrl,
-    client: db.getClient(),
+    // client: db.getClient(),
     store: store
     // store: MongoStore.create({
     //     mongoUrl: dbUrl,
