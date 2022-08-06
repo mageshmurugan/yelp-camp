@@ -93,7 +93,7 @@ app.use(session({
     name: 'session',
     secret: 'squirrel',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         // httpOnly: true,
         // secure: true,
@@ -102,8 +102,8 @@ app.use(session({
     },
     store: MongoStore.create({
         mongoUrl: dbUrl,
-        clientPromise: dbUrl,
-        client: dbUrl,
+        // clientPromise: dbUrl,
+        client: Connection.getClient(),
         collection: 'sessions',
         touchAfter: 24 * 60 * 60,
         crypto: {
