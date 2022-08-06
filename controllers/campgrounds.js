@@ -54,7 +54,7 @@ module.exports.createCampground = async (req, res) => {
         req.flash('primary', msg)
         // console.log(req.files)
         const camp = req.body.campground;
-        // req.session.campgrounds = camp;
+        req.session.campgrounds = camp;
         res.redirect('/campgrounds/new')
 
     }

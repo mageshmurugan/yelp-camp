@@ -62,7 +62,7 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
-const store = new MongoDBStore({
+const store = MongoDBStore.create({
     url: dbUrl,
     secret,
     touchAfter: 24 * 60 * 60
@@ -73,7 +73,7 @@ store.on("error", function (e) {
 })
 
 const sessionConfig = {
-    store,
+    store: store,
     name: 'session',
     secret,
     resave: false,
