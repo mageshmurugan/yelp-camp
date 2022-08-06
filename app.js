@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-const MongoDBStore = require("connect-mongo");
+const MongoStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -62,22 +62,35 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
-const store = MongoDBStore.create({
-    mongoUrl: dbUrl,
-    touchAfter: 24 * 60 * 60,
-    crypto: {
-        secret: 'thisshouldbeabettersecret'
-    }
-});
+// const store = MongoDBStore.create({
+//     mongoUrl: dbUrl,
+//     touchAfter: 24 * 60 * 60,
+//     crypto: {
+//         secret: 'thisshouldbeabettersecret'
+//     }
+// });
 
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR", e)
-})
+// store.on("error", function (e) {
+//     console.log("SESSION STORE ERROR", e)
+// })
 
-const sessionConfig = {
-    store,
+// const sessionConfig = {
+//     store,
+//     name: 'session',
+//     secret,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         httpOnly: true,
+//         // secure: true,
+//         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+//         maxAge: 1000 * 60 * 60 * 24 * 7
+//     }
+// }
+
+app.use(session({
     name: 'session',
-    secret,
+    secret: 'thisshouldbeabettersecret',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -85,10 +98,15 @@ const sessionConfig = {
         // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-}
-
-app.use(session(sessionConfig));
+    },
+    store: MongoStore.create({
+        mongoUrl: dbUrl,
+        touchAfter: 24 * 60 * 60,
+        crypto: {
+            secret: 'thisshouldbeabettersecret'
+        }
+    })
+}));
 app.use(flash());
 // app.use(helmet({ contentSecurityPolicy: false }));
 
