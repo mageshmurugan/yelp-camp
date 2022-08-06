@@ -102,7 +102,7 @@ app.use(session({
     },
     store: MongoStore.create({
         mongoUrl: dbUrl,
-        clientPromise,
+        // clientPromise,
         client,
         collection: 'sessions',
         touchAfter: 24 * 60 * 60,
