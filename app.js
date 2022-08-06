@@ -95,6 +95,7 @@ store.on("error", function (e) {
 app.use(session({
     name: 'session',
     secret: 'squirrel',
+    // mongoUrl: dbUrl,
     resave: true,
     saveUninitialized: true,
     cookie: {
@@ -105,11 +106,11 @@ app.use(session({
     },
     // mongoUrl: dbUrl,
     // client: db.getClient(),
-    store: store
+    store: store,
     // store: MongoStore.create({
     //     mongoUrl: dbUrl,
     //     // clientPromise: dbUrl,
-    //     client: db.getClient(),
+    client: db.getClient()
     //     collection: 'sessions',
     //     touchAfter: 24 * 60 * 60,
     //     crypto: {
