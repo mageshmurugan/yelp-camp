@@ -100,6 +100,7 @@ app.use(session({
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     },
+    mongoUrl: dbUrl,
     store: MongoStore.create({
         mongoUrl: dbUrl,
         // clientPromise: dbUrl,
