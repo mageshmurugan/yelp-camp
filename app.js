@@ -66,7 +66,8 @@ const store = new MongoDBStore({
     uri: dbUrl,
     collection: 'mySessions',
     touchAfter: 24 * 60 * 60,
-    secret: 'thisshouldbeabettersecret'
+    databaseName: "sessions"
+    // secret: 'thisshouldbeabettersecret'
 },
     function (error) {
         console.log(error, "ERROR FROM CONNECT MONGO")
