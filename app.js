@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-const MongoDBStore = require("connect-mongo").default;
+const MongoStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -62,8 +62,9 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
-// const store = MongoDBStore.create({
+// const store = new MongoDBStore({
 //     mongoUrl: dbUrl,
+//     collection: 'sessions',
 //     touchAfter: 24 * 60 * 60,
 //     crypto: {
 //         secret: 'thisshouldbeabettersecret'
@@ -90,22 +91,25 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 app.use(session({
     name: 'session',
-    secret: 'thisshouldbeabettersecret',
+    secret: 'squirrel',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        httpOnly: true,
+        // httpOnly: true,
         // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     },
-    store: new MongoDBStore({
-        client: dbUrl,
+    store: MongoStore.create({
         mongoUrl: dbUrl,
+        clientPromise,
+        client,
+        collection: 'sessions',
         touchAfter: 24 * 60 * 60,
         crypto: {
-            secret: 'thisshouldbeabettersecret'
-        }
+            secret: 'squirrel'
+        },
+        autoRemove: 'native'
     })
 }));
 app.use(flash());
