@@ -103,7 +103,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: dbUrl,
         // clientPromise: dbUrl,
-        client: Connection.getClient(),
+        client: db.getClient(),
         collection: 'sessions',
         touchAfter: 24 * 60 * 60,
         crypto: {
