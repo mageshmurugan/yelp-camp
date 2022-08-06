@@ -63,9 +63,9 @@ app.use(mongoSanitize({
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 const store = new MongoDBStore({
-    mongooseConnection: db,
-    openUri: dbUrl,
-    secret,
+    mongooseConnection: mongoose.connection,
+    uri: process.env.DB_URL,
+    secret: process.env.SECRET,
     touchAfter: 24 * 60 * 60,
     collection: 'session',
     port: 80
