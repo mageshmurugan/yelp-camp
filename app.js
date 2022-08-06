@@ -31,7 +31,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
-const MongoStore = require("connect-mongo");
+const MongoDBStore = require("connect-mongodb-session");
 
 const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
 
@@ -62,18 +62,20 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
-// const store = new MongoDBStore({
-//     mongoUrl: dbUrl,
-//     collection: 'sessions',
-//     touchAfter: 24 * 60 * 60,
-//     crypto: {
-//         secret: 'thisshouldbeabettersecret'
-//     }
-// });
+const store = new MongoDBStore({
+    uri: dbUrl,
+    collection: 'mySessions',
+    touchAfter: 24 * 60 * 60,
+    secret: 'thisshouldbeabettersecret'
+},
+    function (error) {
+        console.log(error, "ERROR FROM CONNECT MONGO")
+    }
+);
 
-// store.on("error", function (e) {
-//     console.log("SESSION STORE ERROR", e)
-// })
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
 
 // const sessionConfig = {
 //     store,
@@ -92,8 +94,8 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 app.use(session({
     name: 'session',
     secret: 'squirrel',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
         // httpOnly: true,
         // secure: true,
@@ -102,17 +104,18 @@ app.use(session({
     },
     // mongoUrl: dbUrl,
     client: db.getClient(),
-    store: MongoStore.create({
-        mongoUrl: dbUrl,
-        // clientPromise: dbUrl,
-        client: db.getClient(),
-        collection: 'sessions',
-        touchAfter: 24 * 60 * 60,
-        crypto: {
-            secret: 'squirrel'
-        },
-        autoRemove: 'native'
-    })
+    store: store
+    // store: MongoStore.create({
+    //     mongoUrl: dbUrl,
+    //     // clientPromise: dbUrl,
+    //     client: db.getClient(),
+    //     collection: 'sessions',
+    //     touchAfter: 24 * 60 * 60,
+    //     crypto: {
+    //         secret: 'squirrel'
+    //     },
+    //     autoRemove: 'native'
+    // })
 }));
 app.use(flash());
 // app.use(helmet({ contentSecurityPolicy: false }));
