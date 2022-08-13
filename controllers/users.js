@@ -108,7 +108,7 @@ module.exports.preRegister = async (req, res, next) => {
         }
 
         console.log(OTP)
-        req.flash('primary', `Email Sent Succesfully`);
+        req.flash('primary', `Otp Sent to Email Succesfully`);
         res.redirect('/preRegister')
     }
 }
