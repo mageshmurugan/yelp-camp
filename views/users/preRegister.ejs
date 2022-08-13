@@ -6,41 +6,20 @@
                     <img src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
                         alt="" class="card-img-top" />
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <% if(renderEmail){ %>
-                                <%= renderEmail.email %>
-                                    <% } %>
-                        </h5>
-
-                        <form action="/register" method="POST" class="validated-form" novalidate>
-                            <!-- <div class="mb-3">
+                        <h5 class="card-title">Register</h5>
+                        <form action="/preRegister" method="POST" class="validated-form" novalidate>
+                            <div class="mb-3">
                                 <label class="form-label" for="username">Username</label>
                                 <input class="form-control" type="text" id="username" autocomplete="off" name="username"
                                     required autofocus>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
-                            </div> -->
-                            <!-- <div class="mb-3">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label" for="email">Email</label>
                                 <input class="form-control" type="email" id="email" autocomplete="off" name="email"
                                     required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div> -->
-                            <div class="mb-3">
-                                <label class="form-label" for="otp">Otp</label>
-                                <input class="form-control" type="number" id="otp" autocomplete="off" name="otp"
-                                    required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="password">Password</label>
-                                <input class="form-control" autocomplete="off" type="password" id="password"
-                                    name="password" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>

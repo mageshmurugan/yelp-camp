@@ -33,8 +33,8 @@ const MongoStore = require("connect-mongo");
 const app = express();
 app.use(express.urlencoded({ extended: true }))
 
-const dbUrl = process.env.DB_URL //|| 'mongodb://localhost:27017/yelp-camp';
-
+const dbUrl = process.env.DB_URL// || 'mongodb://localhost:27017/yelp-camp';
+// const dbUrl = 'mongodb://localhost:27017/yelp-camp';
 // 'mongodb://localhost:27017/yelp-camp'
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -65,7 +65,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60,
+    touchAfter: 24 * 60 * 60
     // collection: 'session',
     // port: 80
 });
@@ -82,7 +82,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        secure: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -100,7 +100,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    // res.locals.returnTo = req.originalUrl;
+    res.locals.returnTo = req.originalUrl;
     // console.log(`app.use....${req.session.returnTo}`)  
     // console.log(req.query)
     res.locals.currentUser = req.user;
@@ -152,7 +152,7 @@ app.use((err, req, res, next) => {
     // res.send('Oh Boy,Something Went Wrong')
 })
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT //|| 3000;
 
 app.listen(port, () => {
     console.log(`SERVING ON PORT${port}`)
