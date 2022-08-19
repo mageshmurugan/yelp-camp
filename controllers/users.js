@@ -83,7 +83,7 @@ module.exports.preRegister = async (req, res, next) => {
 
 
         const mailOptions = {
-            from: 'mageshmurugan64@gmail.com',
+            from: 'Yelp Camp <mageshmurugan64@gmail.com>',
             to: `${email}`,
             subject: `YelpCamp`,
             text: `Here is Your Otp\n${OTP}`
