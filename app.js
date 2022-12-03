@@ -2,9 +2,7 @@
 //     require('dotenv').config();
 // }
 
-// mongodb + srv://mageshmurugan:<password>@cluster0.yu1cetk.mongodb.net/?retryWrites=true&w=majority
 
-// console.log(process.env.CLOUDINARY_CLOUD_NAME)
 
 const express = require('express');
 const path = require('path');

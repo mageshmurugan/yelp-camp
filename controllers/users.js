@@ -8,14 +8,16 @@ const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
 
 
+const emailUser = process.env.EMAILUSER //|| 3000;
+const emailPassword = process.env.EMAILPASSWORD //|| 3000;
 
 const authmail = nodemailer.createTransport({
     service: 'gmail',
     // host: 'smtp.ethereal.email',
     // port: 587,
     auth: {
-        user: 'mageshmurugan64@gmail.com',
-        pass: 'nwhlltxkjhonekoh'
+        user: emailUser,
+        pass: emailPassword
     }
 });
 
@@ -83,7 +85,7 @@ module.exports.preRegister = async (req, res, next) => {
 
 
         const mailOptions = {
-            from: 'Yelp Camp <mageshmurugan64@gmail.com>',
+            from: `Yelp Camp <${emailUser}>`,
             to: `${email}`,
             subject: `YelpCamp`,
             text: `Here is Your Otp\n${OTP}`
