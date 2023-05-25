@@ -152,6 +152,10 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT //|| 3000;
 
-app.listen(port, () => {
-    console.log(`SERVING ON PORT${port}`)
-})
+if(port){
+    app.listen(port, () => {
+        console.log(`SERVING ON PORT${port}`)
+    })
+}
+
+module.exports=app;
