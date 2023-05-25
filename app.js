@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config();
-// }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 
 
@@ -20,6 +20,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user')
 const mongoSanitize = require('express-mongo-sanitize');
+// const { MongoClient, ServerApiVersion } = require('mongodb');
 // const helmet = require('helmet');
 
 const userRoutes = require('./routes/users');
@@ -40,6 +41,30 @@ mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
     // useFindAndModify: false
 });
+
+
+// const client = new MongoClient(dbUrl, {
+//     serverApi: {
+//       version: ServerApiVersion.v1,
+//       strict: true,
+//       deprecationErrors: true,
+//     }
+//   });
+  
+  
+// async function run() {
+//     try {
+//       // Connect the client to the server	(optional starting in v4.7)
+//       await client.connect();
+//       // Send a ping to confirm a successful connection
+//       await client.db("admin").command({ ping: 1 });
+//       console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//     } finally {
+//       // Ensures that the client will close when you finish/error
+//       await client.close();
+//     }
+//   }
+//   run().catch(console.dir);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -63,8 +88,8 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     secret,
-    touchAfter: 24 * 60 * 60
-    // collection: 'session',
+    touchAfter: 24 * 60 * 60,
+    collection: 'session',
     // port: 80
 });
 
@@ -152,10 +177,10 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT //|| 3000;
 
-if(port){
+// if(port){
     app.listen(port, () => {
         console.log(`SERVING ON PORT${port}`)
     })
-}
+// }
 
-module.exports=app;
+// module.exports=app;
