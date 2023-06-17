@@ -93,9 +93,9 @@ const store = MongoStore.create({
     // port: 80
 });
 
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR", e)
-})
+// store.on("error", function (e) {
+//     console.log("SESSION STORE ERROR", e)
+// })
 
 const sessionConfig = {
     store,
